@@ -1,6 +1,6 @@
 const { admin, db } = require("./admin");
 
-module.exports = (request, response, next) => {
+module.exports = (request, response, next) => { 
   let idToken;
   if (
     request.headers.authorization &&
