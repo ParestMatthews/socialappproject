@@ -60,7 +60,9 @@ exports.signup = (request, response) => {
       if (err.code === 'auth/email-already-in-use') {
         return response.status(400).json({ error: 'Email is already in use' });
       } else {
-        return response.status(500).json({ error: err.code });
+        return response
+          .status(500)
+          .json({ general: 'Something went wrong, please try again' });
       }
     });
 };
@@ -91,7 +93,7 @@ exports.login = (request, response) => {
         err.code === 'auth/user-not-found'
       ) {
         return response
-          .status(400)
+          .status(403)
           .json({ general: 'Wrong credentials, please try again' });
       }
       return response.status(500).json({ error: err.code });
@@ -217,4 +219,59 @@ exports.uploadImage = (request, response) => {
       });
   });
   busboy.end(request.rawBody);
+};
+
+// get any user details
+exports.getUserDetails = (request, response) => {
+  let userData = {};
+  db.doc(`/users/${request.params.handle}`)
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        userData.user = doc.data();
+        return db
+          .collection('posts')
+          .where('userHandle', '==', request.params.handle)
+          .orderBy('createdAt', 'desc')
+          .get();
+      } else {
+        return response.status(404).json({ error: 'User not found' });
+      }
+    })
+    .then((data) => {
+      userData.posts = [];
+      data.forEach((doc) => {
+        userData.posts.push({
+          body: doc.data().body,
+          createdAt: doc.data().createdAt,
+          userHandle: doc.data().userHandle,
+          userImage: doc.data().userImage,
+          likeCount: doc.data().likeCount,
+          commentCount: doc.data().commentCount,
+          postId: doc.id,
+        });
+      });
+      return response.json(userData);
+    })
+    .catch((err) => {
+      console.error(err);
+      return response.status(500).json({ error: err.code });
+    });
+};
+
+exports.markNotificationsRead = (request, response) => {
+  let batch = db.batch(); // multiple documents
+  request.body.forEach((notificationId) => {
+    const notification = db.doc(`/notifications/${notificationId}`);
+    batch.update(notification, { read: true });
+  });
+  batch
+    .commit()
+    .then(() => {
+      return response.json({ message: 'Notifications marked read' });
+    })
+    .catch((err) => {
+      console.error(err);
+      return response.status(500).json({ error: err.code });
+    });
 };
