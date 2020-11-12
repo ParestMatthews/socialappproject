@@ -28,6 +28,14 @@ class Login extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.UI.errors) {
+      this.setState({
+        errors: nextProps.UI.errors,
+      });
+    }
+  }
+
   handleSubmit = (event) => {
     event.preventDefault();
     const userData = {
@@ -120,7 +128,7 @@ const mapStateToProps = (state) => ({
   UI: state.UI,
 });
 
-const mapActionToProps = {
+const mapActionsToProps = {
   loginUser,
 };
 

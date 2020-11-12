@@ -25,7 +25,7 @@ export const loginUser = (userData, history) => (dispatch) => {
 
 export const getUserData = () => (dispatch) => {
   axios
-    .get('/users')
+    .get('/user')
     .then((res) => {
       dispatch({
         type: SET_USER,
