@@ -2,33 +2,21 @@ import React, { Component } from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 // NUI
 import { TextField } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-const styles = {
-  form: {
-    textAlign: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    display: 'block',
-    maxWidth: 500,
-    margin: 'auto',
-  },
-  textField: {
-    marginBottom: '1rem',
-  },
-  pageTitle: {
-    marginBottom: '3rem',
-  },
-  customError: {
-    color: 'red',
-    fontSize: 15,
-    marginBottom: '1rem',
-  },
-};
+//redux
+import { connect } from 'react-redux';
+import { loginUser } from '../redux/actions/userActions';
+
+const styles = (theme) => ({
+  ...theme.spread,
+});
 
 class Login extends Component {
   constructor() {
@@ -36,36 +24,17 @@ class Login extends Component {
     this.state = {
       email: '',
       password: '',
-      loading: false,
       errors: {},
     };
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.setState({
-      loading: true,
-    });
     const userData = {
       email: this.state.email,
       password: this.state.password,
     };
-    axios
-      .post('/login', userData)
-      .then((res) => {
-        console.log(res.data);
-        this.setState({
-          loading: false,
-        });
-        this.props.history.push('/'); // home page
-      })
-      .catch((err) => {
-        this.setState({
-          errors: err.response.data,
-          loading: false,
-        });
-        console.error(err);
-      });
+    this.props.loginUser(userData, this.props.history);
   };
 
   handleChange = (event) => {
@@ -75,8 +44,11 @@ class Login extends Component {
   };
 
   render() {
-    const { classes } = this.props;
-    const { errors, loading } = this.state;
+    const {
+      classes,
+      UI: { loading },
+    } = this.props;
+    const { errors } = this.state;
     console.log(errors);
     return (
       <div className={classes.form}>
@@ -119,9 +91,17 @@ class Login extends Component {
             type="submit"
             variant="contained"
             color="primary"
-            className={classes.button}>
+            className={classes.button}
+            disabled={loading}>
             Login
+            {loading && (
+              <CircularProgress size={25} className={classes.progress} />
+            )}
           </Button>
+          <br />
+          <small>
+            Don't have an account yet? sign up <Link to="/signup">here</Link>
+          </small>
         </form>
       </div>
     );
@@ -130,6 +110,21 @@ class Login extends Component {
 
 Login.propTypes = {
   classes: PropTypes.object.isRequired,
+  loginUser: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  UI: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Login);
+const mapStateToProps = (state) => ({
+  user: state.user,
+  UI: state.UI,
+});
+
+const mapActionToProps = {
+  loginUser,
+};
+
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(withStyles(styles)(Login));
