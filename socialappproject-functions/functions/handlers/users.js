@@ -212,7 +212,7 @@ exports.uploadImage = (request, response) => {
           .update({ imageUrl: imageUrl });
       })
       .then(() => {
-        return res.json({ message: 'Image uploaded successfully' });
+        return response.json({ message: 'Image uploaded successfully' });
       })
       .catch((err) => {
         console.error(err);
