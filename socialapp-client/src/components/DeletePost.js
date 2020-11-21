@@ -56,7 +56,7 @@ class DeletePost extends Component {
           fullWidth
           maxWidth="sm">
           <DialogTitle>
-            Are you sure you want to delete this post dXDD?
+            Are you sure you want to delete this post dXDDd?
           </DialogTitle>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
