@@ -4,6 +4,10 @@ import {
   LIKE_POST,
   UNLIKE_POST,
   DELETE_POST,
+  SET_ERRORS,
+  ADD_POST,
+  CLEAR_ERRORS,
+  LOADING_UI,
 } from '../types';
 import axios from 'axios';
 
@@ -26,8 +30,27 @@ export const getPosts = () => (dispatch) => {
     });
 };
 
-// like post
+// add a post
+export const addPost = (newPost) => (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  axios
+    .post('/post', newPost)
+    .then((res) => {
+      dispatch({
+        type: ADD_POST,
+        payload: res.data,
+      });
+      dispatch({ type: CLEAR_ERRORS });
+    })
+    .catch((err) => {
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response.data,
+      });
+    });
+};
 
+// like post
 export const likePost = (postId) => (dispatch) => {
   axios
     .get(`/post/${postId}/like`)
