@@ -5,7 +5,7 @@ import MyButton from '../util/MyButton';
 
 //redux
 import { connect } from 'react-redux';
-import { addPost } from '../redux/actions/dataActions';
+import { addPost, clearErrors } from '../redux/actions/dataActions';
 
 //mui
 import Button from '@material-ui/core/Button';
@@ -22,7 +22,8 @@ import CloseIcon from '@material-ui/icons/Close';
 const styles = (theme) => ({
   ...theme.spread,
   submitButton: {
-    marginTop: '3%',
+    marginTop: '2%',
+    float: 'right',
   },
   progressSpinner: {
     position: 'absolute',
@@ -40,11 +41,29 @@ class AddPost extends Component {
     body: '',
     errors: {},
   };
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.UI.errors) {
+      this.setState({
+        errors: nextProps.UI.errors,
+      });
+    }
+    if (!nextProps.UI.errors && !nextProps.UI.loading) {
+      this.setState({ body: '', open: false, errors: {} });
+    }
+  }
   handleOpen = () => {
     this.setState({ open: true });
   };
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({ open: false, errors: {} });
+    this.props.clearErrors();
+  };
+  handleChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+  handleSubmit = (event) => {
+    event.preventDefault();
+    this.props.addPost({ body: this.state.body });
   };
   render() {
     const { errors } = this.state;
@@ -84,21 +103,21 @@ class AddPost extends Component {
                 onChange={this.handleChange}
                 fullWidth
               />
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                className={classes.submitButton}
+                disabled={loading}>
+                Submit
+                {loading && (
+                  <CircularProgress
+                    size={25}
+                    className={classes.progressSpinner}
+                  />
+                )}
+              </Button>
             </form>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              className={classes.submitButton}
-              disabled={loading}>
-              Submit
-              {loading && (
-                <CircularProgress
-                  size={25}
-                  className={classes.progressSpinner}
-                />
-              )}
-            </Button>
           </DialogContent>
         </Dialog>
       </Fragment>
@@ -109,6 +128,7 @@ class AddPost extends Component {
 AddPost.propTypes = {
   addPost: PropTypes.func.isRequired,
   UI: PropTypes.object.isRequired,
+  clearErrors: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

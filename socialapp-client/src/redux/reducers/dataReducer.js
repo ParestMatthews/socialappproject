@@ -5,6 +5,7 @@ import {
   LOADING_DATA,
   DELETE_POST,
   ADD_POST,
+  SET_POST,
 } from '../types';
 
 const initialState = {
@@ -26,6 +27,11 @@ export default function (state = initialState, action) {
         posts: action.payload,
         loading: false,
       };
+    case SET_POST:
+      return {
+        ...state,
+        post: action.payload,
+      };
     case LIKE_POST:
     case UNLIKE_POST:
       let index = state.posts.findIndex(
@@ -36,8 +42,8 @@ export default function (state = initialState, action) {
         ...state,
       };
     case DELETE_POST:
-      index = state.posts.findIndex((post) => post.postId === action.payload);
-      state.posts.splice(index, 1);
+      let i = state.posts.findIndex((post) => post.postId === action.payload);
+      state.posts.splice(i, 1);
       return {
         ...state,
       };

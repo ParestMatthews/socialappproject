@@ -8,6 +8,8 @@ import {
   ADD_POST,
   CLEAR_ERRORS,
   LOADING_UI,
+  SET_POST,
+  STOP_LOADING_UI,
 } from '../types';
 import axios from 'axios';
 
@@ -84,6 +86,22 @@ export const deletePost = (postId) => (dispatch) => {
     .delete(`/post/${postId}`)
     .then(() => {
       dispatch({ type: DELETE_POST, payload: postId });
+      console.log('reached?');
+    })
+    .catch((err) => console.log(err));
+};
+
+export const clearErrors = () => (dispatch) => {
+  dispatch({ type: 'CLEAR_ERRORS' });
+};
+
+export const getPost = (postId) => (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  axios
+    .get(`/post/${postId}`)
+    .then((res) => {
+      dispatch({ type: SET_POST, payload: res.data });
+      dispatch({ type: STOP_LOADING_UI });
     })
     .catch((err) => console.log(err));
 };

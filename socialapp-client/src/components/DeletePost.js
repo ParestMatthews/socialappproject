@@ -71,7 +71,7 @@ class DeletePost extends Component {
 }
 
 DeletePost.propTypes = {
-  deletePOst: PropTypes.func.isRequired,
+  deletePost: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
   postId: PropTypes.string.isRequired,
 };
