@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import MyButton from '../util/MyButton';
-import AddPost from './AddPost';
+import MyButton from '../../util/MyButton';
+import AddPost from '../post/AddPost';
 
 //redux
 import { connect } from 'react-redux';
