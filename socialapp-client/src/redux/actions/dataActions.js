@@ -10,6 +10,7 @@ import {
   LOADING_UI,
   SET_POST,
   STOP_LOADING_UI,
+  SUBMIT_COMMENT,
 } from '../types';
 import axios from 'axios';
 
@@ -42,7 +43,7 @@ export const addPost = (newPost) => (dispatch) => {
         type: ADD_POST,
         payload: res.data,
       });
-      dispatch({ type: CLEAR_ERRORS });
+      dispatch(clearErrors());
     })
     .catch((err) => {
       dispatch({
@@ -104,4 +105,38 @@ export const getPost = (postId) => (dispatch) => {
       dispatch({ type: STOP_LOADING_UI });
     })
     .catch((err) => console.log(err));
+};
+
+//submit comment
+export const submitComment = (postId, commentData) => (dispatch) => {
+  axios
+    .post(`/post/${postId}/comment`, commentData)
+    .then((res) => {
+      dispatch({
+        type: SUBMIT_COMMENT,
+        payload: res.data,
+      });
+      dispatch(clearErrors());
+    })
+    .catch((err) => {
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response.data,
+      });
+    });
+};
+
+export const getUserData = (userHandle) => (dispatch) => {
+  dispatch({ type: LOADING_DATA });
+  axios
+    .get(`/user/${userHandle}`)
+    .then((res) => {
+      dispatch({
+        type: SET_POSTS,
+        payload: res.data.posts,
+      });
+    })
+    .catch((err) => {
+      dispatch({ type: SET_POSTS, payload: null });
+    });
 };
