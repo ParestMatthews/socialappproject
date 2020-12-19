@@ -4,6 +4,7 @@ import axios from 'axios';
 import Post from '../components/post/Post';
 import StaticProfile from '../components/profile/StaticProfile';
 import Grid from '@material-ui/core/Grid';
+import PostSkeleton from '../util/PostSkeleton';
 
 //redux
 import { connect } from 'react-redux';
@@ -12,9 +13,14 @@ import { getUserData } from '../redux/actions/dataActions';
 class User extends Component {
   state = {
     profile: null,
+    postIdParam: null,
   };
   componentDidMount() {
     const handle = this.props.match.params.handle;
+    const postId = this.props.match.params.postId;
+
+    if (postId) this.setState({ postIdParam: postId });
+
     this.props.getUserData(handle);
     axios
       .get(`/user/${handle}`)
@@ -27,13 +33,20 @@ class User extends Component {
   }
   render() {
     const { posts, loading } = this.props.data;
+    const { postIdParam } = this.state;
 
     const postMarkup = loading ? (
-      <p>Loading data...</p>
+      <PostSkeleton />
     ) : posts === null ? (
       <p>No Posts from this user</p>
-    ) : (
+    ) : !postIdParam ? (
       posts.map((post) => <Post key={post.postId} post={post} />)
+    ) : (
+      posts.map((post) => {
+        if (post.postId !== postIdParam)
+          return <Post key={post.postId} post={post} />;
+        else return <Post key={post.postId} post={post} openDialog />;
+      })
     );
 
     return (

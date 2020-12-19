@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 //components
 import Post from '../components/post/Post';
 import Profile from '../components/profile/Profile';
+import PostSkeleton from '../util/PostSkeleton';
 
 //redux
 import { connect } from 'react-redux';
@@ -20,7 +21,7 @@ class Home extends Component {
     let recentPosts = !loading ? (
       posts.map((post) => <Post post={post} key={post.postId}></Post>)
     ) : (
-      <p>Loading...</p>
+      <PostSkeleton />
     );
 
     return (
