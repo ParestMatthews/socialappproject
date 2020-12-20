@@ -15,35 +15,7 @@ import LinkIcon from '@material-ui/icons/Link';
 import CalendarToday from '@material-ui/icons/CalendarToday';
 
 const styles = (theme) => ({
-  paper: {
-    padding: 20,
-  },
-  profile: {
-    '& .image-wrapper': {
-      textAlign: 'center',
-      position: 'relative',
-    },
-    '& .profile-image': {
-      width: 200,
-      height: 200,
-      objectFit: 'cover',
-      maxWidth: '100%',
-      borderRadius: '50%',
-    },
-    '& .profile-details': {
-      textAlign: 'center',
-      '& span, svg': {
-        verticalAlign: 'middle',
-      },
-      '& a': {
-        color: '#00bcd4',
-      },
-    },
-    '& hr': {
-      border: 'none',
-      margin: '0 0 10px 0',
-    },
-  },
+  ...theme.spread,
 });
 
 const StaticProfile = (props) => {
@@ -79,7 +51,11 @@ const StaticProfile = (props) => {
           {website && (
             <Fragment>
               <LinkIcon color="primary" />
-              <a href={website} target="_blank" rel="noopener noreferrer">
+              <a
+                href={website}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: '#7289da' }}>
                 {' '}
                 {website}
               </a>

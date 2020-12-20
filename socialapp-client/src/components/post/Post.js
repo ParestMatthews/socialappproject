@@ -26,6 +26,7 @@ const style = {
     display: 'flex',
     marginBottom: 20,
     position: 'relative',
+    backgroundColor: '#2c2f33',
   },
   image: {
     minWidth: 200,

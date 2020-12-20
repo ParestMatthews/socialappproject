@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import EditDetails from './EditDetails';
 import MyButton from '../../util/MyButton';
+import ProfileSkeleton from '../../util/ProfileSkeleton';
 
 //MUI
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -24,51 +25,7 @@ import { connect } from 'react-redux';
 import { logoutUser, uploadImage } from '../../redux/actions/userActions';
 
 const styles = (theme) => ({
-  paper: {
-    padding: 20,
-  },
-  profile: {
-    '& .image-wrapper': {
-      textAlign: 'center',
-      position: 'relative',
-      '& button': {
-        position: 'absolute',
-        top: '80%',
-        left: '70%',
-      },
-    },
-    '& .profile-image': {
-      width: 200,
-      height: 200,
-      objectFit: 'cover',
-      maxWidth: '100%',
-      borderRadius: '50%',
-    },
-    '& .profile-details': {
-      textAlign: 'center',
-      '& span, svg': {
-        verticalAlign: 'middle',
-      },
-      '& a': {
-        color: '#00bcd4',
-      },
-    },
-    '& hr': {
-      border: 'none',
-      margin: '0 0 10px 0',
-    },
-    '& svg.button': {
-      '&:hover': {
-        cursor: 'pointer',
-      },
-    },
-  },
-  buttons: {
-    textAlign: 'center',
-    '& a': {
-      margin: '20px 10px',
-    },
-  },
+  ...theme.spread,
 });
 
 class Profile extends Component {
@@ -120,12 +77,10 @@ class Profile extends Component {
             </div>
             <hr />
             <div className="profile-details">
-              <Muilink
-                component={Link}
-                to={`/users/${handle}`}
-                color="primary"
-                variant="h5">
-                @{handle}
+              <Muilink component={Link} to={`/users/${handle}`}>
+                <Typography color="primary" variant="h5">
+                  @{handle}
+                </Typography>
               </Muilink>
               <hr />
               {bio && <Typography variant="body2">{bio}</Typography>}
@@ -139,7 +94,12 @@ class Profile extends Component {
               {website && (
                 <Fragment>
                   <LinkIcon color="primary" />
-                  <a href={website} target="_blank" rel="noopener noreferrer">
+
+                  <a
+                    href={website}
+                    style={{ color: '#7289da' }}
+                    target="_blank"
+                    rel="noopener noreferrer">
                     {' '}
                     {website}
                   </a>
@@ -180,7 +140,7 @@ class Profile extends Component {
         </Paper>
       )
     ) : (
-      <Paper>Loading...</Paper>
+      <ProfileSkeleton />
     );
 
     return profileMarkup;

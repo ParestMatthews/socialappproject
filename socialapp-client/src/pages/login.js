@@ -59,7 +59,7 @@ class Login extends Component {
     console.log(errors);
     return (
       <div className={classes.form}>
-        <Typography variant="h2" className={classes.pageTitle}>
+        <Typography variant="h2" color="primary" className={classes.pageTitle}>
           Login
         </Typography>
         <form noValidate onSubmit={this.handleSubmit}>

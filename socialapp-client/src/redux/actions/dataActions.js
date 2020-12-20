@@ -93,7 +93,7 @@ export const deletePost = (postId) => (dispatch) => {
 };
 
 export const clearErrors = () => (dispatch) => {
-  dispatch({ type: 'CLEAR_ERRORS' });
+  dispatch({ type: CLEAR_ERRORS });
 };
 
 export const getPost = (postId) => (dispatch) => {

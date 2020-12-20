@@ -1,9 +1,9 @@
 export default {
   palette: {
     primary: {
-      light: '#33c9dc',
-      main: '#00bcd4',
-      dark: '#008394',
+      light: '#7289da',
+      main: '#7289da',
+      dark: '#5e74b8',
       contrastText: '#fff',
     },
     secondary: {
@@ -12,8 +12,10 @@ export default {
       dark: '#b22a00',
       contrastText: '#fff',
     },
+    type: 'dark',
   },
   spread: {
+
     form: {
       textAlign: 'center',
       alignItems: 'center',
@@ -47,6 +49,52 @@ export default {
       width: '100%',
       borderBottom: '1px solid rgba(0,0,0,0.1)',
       marginBottom: 20,
+    },
+    paper: {
+      padding: 20,
+      backgroundColor: '#2c2f33',
+    },
+    profile: {
+      '& .image-wrapper': {
+        textAlign: 'center',
+        position: 'relative',
+        '& button': {
+          position: 'absolute',
+          top: '80%',
+          left: '70%',
+        },
+      },
+      '& .profile-image': {
+        width: 200,
+        height: 200,
+        objectFit: 'cover',
+        maxWidth: '100%',
+        borderRadius: '50%',
+      },
+      '& .profile-details': {
+        textAlign: 'center',
+        '& span, svg': {
+          verticalAlign: 'middle',
+        },
+        '& a': {
+          color: '#00bcd4',
+        },
+      },
+      '& hr': {
+        border: 'none',
+        margin: '0 0 10px 0',
+      },
+      '& svg.button': {
+        '&:hover': {
+          cursor: 'pointer',
+        },
+      },
+    },
+    buttons: {
+      textAlign: 'center',
+      '& a': {
+        margin: '20px 10px',
+      },
     },
   },
 };

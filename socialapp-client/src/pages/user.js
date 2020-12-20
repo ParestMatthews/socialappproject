@@ -5,6 +5,7 @@ import Post from '../components/post/Post';
 import StaticProfile from '../components/profile/StaticProfile';
 import Grid from '@material-ui/core/Grid';
 import PostSkeleton from '../util/PostSkeleton';
+import ProfileSkeleton from '../util/ProfileSkeleton';
 
 //redux
 import { connect } from 'react-redux';
@@ -51,15 +52,15 @@ class User extends Component {
 
     return (
       <Grid container spacing={5}>
-        <Grid item sm={8} xs={12}>
-          {postMarkup}
-        </Grid>
         <Grid item sm={4} xs={12}>
           {this.state.profile === null ? (
-            <p>loading...</p>
+            <ProfileSkeleton />
           ) : (
             <StaticProfile profile={this.state.profile} />
           )}
+        </Grid>
+        <Grid item sm={8} xs={12}>
+          {postMarkup}
         </Grid>
       </Grid>
     );
