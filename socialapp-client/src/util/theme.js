@@ -15,7 +15,6 @@ export default {
     type: 'dark',
   },
   spread: {
-
     form: {
       textAlign: 'center',
       alignItems: 'center',
@@ -53,6 +52,8 @@ export default {
     paper: {
       padding: 20,
       backgroundColor: '#2c2f33',
+      position: 'sticky',
+      top: '5rem',
     },
     profile: {
       '& .image-wrapper': {

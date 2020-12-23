@@ -32,12 +32,10 @@ const StaticProfile = (props) => {
         </div>
         <hr />
         <div className="profile-details">
-          <Muilink
-            component={Link}
-            to={`/users/${handle}`}
-            color="primary"
-            variant="h5">
-            @{handle}
+          <Muilink component={Link} to={`/users/${handle}`}>
+            <Typography color="primary" variant="h5">
+              @{handle}
+            </Typography>
           </Muilink>
           <hr />
           {bio && <Typography variant="body2">{bio}</Typography>}

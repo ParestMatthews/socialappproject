@@ -13,6 +13,10 @@ import { submitComment } from '../../redux/actions/dataActions';
 
 const styles = (theme) => ({
   ...theme.spread,
+  flexCss: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
 });
 
 class CommentForm extends Component {
@@ -54,13 +58,15 @@ class CommentForm extends Component {
             fullWidth
             className={classes.textField}
           />
-          <Button
-            type="submit"
-            color="primary"
-            variant="contained"
-            className={classes.button}>
-            Submit
-          </Button>
+          <div className={classes.flexCss}>
+            <Button
+              type="submit"
+              color="primary"
+              variant="contained"
+              className={classes.button}>
+              Submit
+            </Button>
+          </div>
         </form>
         <hr className={classes.visibileSeparator} />
       </Grid>

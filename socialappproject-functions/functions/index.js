@@ -5,6 +5,9 @@ const express = require('express');
 const app = express();
 const FBAuth = require('./util/fbAuth');
 
+const cors = require('cors');
+app.use(cors());
+
 const { db } = require('./util/admin');
 
 const {

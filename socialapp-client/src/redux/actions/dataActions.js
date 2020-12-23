@@ -135,7 +135,7 @@ export const getUserData = (userHandle) => (dispatch) => {
         payload: res.data.posts,
       });
     })
-    .catch((err) => {
+    .catch(() => {
       dispatch({ type: SET_POSTS, payload: null });
     });
 };

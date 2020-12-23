@@ -67,7 +67,7 @@ class Signup extends Component {
     console.log(errors);
     return (
       <div className={classes.form}>
-        <Typography variant="h2" className={classes.pageTitle}>
+        <Typography variant="h2" color="primary" className={classes.pageTitle}>
           Signup
         </Typography>
         <form noValidate onSubmit={this.handleSubmit}>
@@ -140,8 +140,8 @@ class Signup extends Component {
             )}
           </Button>
           <br />
-          <small>
-            Aleady have an account? Login <Link to="/login">here</Link>
+          <small style={{ color: '#fff' }}>
+            Aleady have an account? Login <Link to="/login" >here</Link>
           </small>
         </form>
       </div>

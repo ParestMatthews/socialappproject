@@ -106,7 +106,7 @@ class Login extends Component {
             )}
           </Button>
           <br />
-          <small>
+          <small style={{ color: '#fff' }}>
             Don't have an account yet? sign up <Link to="/signup">here</Link>
           </small>
         </form>
