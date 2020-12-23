@@ -66,7 +66,7 @@ class PostDialog extends Component {
   handleOpen = () => {
     let oldPath = window.location.pathname;
     const { userHandle, postId } = this.props;
-    const newPath = `/users${userHandle}/post/${postId}`;
+    const newPath = `/users/${userHandle}/post/${postId}`;
 
     if (oldPath === newPath) oldPath = `/users/${userHandle}`;
 

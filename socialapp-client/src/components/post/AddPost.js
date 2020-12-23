@@ -55,8 +55,8 @@ class AddPost extends Component {
     this.setState({ open: true });
   };
   handleClose = () => {
-    this.setState({ open: false, errors: {} });
     this.props.clearErrors();
+    this.setState({ open: false, errors: {} });
   };
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });

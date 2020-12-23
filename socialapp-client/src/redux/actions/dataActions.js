@@ -87,7 +87,6 @@ export const deletePost = (postId) => (dispatch) => {
     .delete(`/post/${postId}`)
     .then(() => {
       dispatch({ type: DELETE_POST, payload: postId });
-      console.log('reached?');
     })
     .catch((err) => console.log(err));
 };
